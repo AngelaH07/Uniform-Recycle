@@ -1,0 +1,6 @@
+{
+  "name": "Uniform Recycling",
+  "description": "A sustainable school uniform recycling platform by the Uniform Recycling group, offering donation drop-offs, eco impact tracking, and online purchasing of pre-loved school uniforms.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
