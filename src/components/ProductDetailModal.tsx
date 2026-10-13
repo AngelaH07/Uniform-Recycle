@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import { UniformItem } from '../types';
+import { useLanguage } from '../context/LanguageContext';
 import { 
   X, 
   ShoppingBag, 
   ShieldCheck, 
-  Sparkles, 
   CheckCircle2, 
   Ruler, 
   Droplets, 
-  Leaf, 
-  Tag, 
   Share2, 
   Heart,
-  Truck,
   Building2,
-  Check
+  Check,
+  ExternalLink
 } from 'lucide-react';
+
+const PURCHASE_FORM_URL = 'https://www.wjx.top/vm/mcN5csM.aspx';
 
 interface ProductDetailModalProps {
   item: UniformItem | null;
@@ -37,6 +37,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   const [quantity, setQuantity] = useState(1);
   const [showSizeGuide, setShowSizeGuide] = useState(false);
   const [copied, setCopied] = useState(false);
+  const { t, translateCategory, translateCondition } = useLanguage();
 
   const savings = item.originalRetailPrice - item.price;
   const savingsPct = Math.round((savings / item.originalRetailPrice) * 100);
@@ -84,7 +85,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 </div>
 
                 <div className="absolute bottom-3 right-3 bg-amber-400 text-amber-950 font-black text-xs px-2.5 py-1 rounded-md shadow-xs">
-                  {savingsPct}% OFF RETAIL
+                  {savingsPct}% {t('product.offRetail', 'OFF RETAIL')}
                 </div>
               </div>
 
@@ -92,10 +93,10 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-xs space-y-1">
                 <div className="flex items-center gap-1.5 font-bold text-emerald-900">
                   <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                  <span>Sanitization Verification Stamp</span>
+                  <span>{t('product.sanitStamp', 'Sanitization Verification Stamp')}</span>
                 </div>
                 <p className="text-[11px] text-emerald-800">
-                  Laundered at 60°C & high-pressure steam treated on {item.sanitizedDate}. Hygenic & ready for schoolwear.
+                  {t('product.sanitDesc', 'Laundered at 60°C & high-pressure steam treated on {date}. Hygienic & ready for schoolwear.').replace('{date}', item.sanitizedDate)}
                 </p>
               </div>
 
@@ -103,10 +104,10 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               <div className="bg-teal-50 border border-teal-200 rounded-xl p-3 text-xs space-y-1">
                 <div className="flex items-center gap-1.5 font-bold text-teal-900">
                   <Droplets className="w-4 h-4 text-sky-600" />
-                  <span>Environmental Savings</span>
+                  <span>{t('product.ecoSavings', 'Environmental Savings')}</span>
                 </div>
                 <p className="text-[11px] text-teal-800">
-                  Re-using this {item.category} saves approximately ~2,400L of water and 6.5kg of carbon emissions.
+                  {t('product.ecoDesc', 'Re-using this {category} saves approximately ~2,400L of water and 6.5kg of carbon emissions.').replace('{category}', translateCategory(item.category))}
                 </p>
               </div>
             </div>
@@ -122,7 +123,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 }`}
               >
                 <Heart className={`w-4 h-4 ${isSaved ? 'fill-current' : ''}`} />
-                <span>{isSaved ? 'Saved in Wishlist' : 'Add to Wishlist'}</span>
+                <span>{isSaved ? t('product.saved', 'Saved in Wishlist') : t('product.saveToWishlist', 'Add to Wishlist')}</span>
               </button>
 
               <button
@@ -144,16 +145,16 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               {/* Category & School Badge */}
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="bg-gray-100 text-gray-800 text-[11px] font-bold px-2.5 py-0.5 rounded-md uppercase">
-                  {item.category}
+                  {translateCategory(item.category)}
                 </span>
                 <span className={`text-[11px] font-extrabold px-2.5 py-0.5 rounded-full ${
                   item.condition === 'Like New' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-900'
                 }`}>
-                  Condition: {item.condition}
+                  {t('product.condition', 'Condition:')} {translateCondition(item.condition)}
                 </span>
                 {item.badgePresent && (
                   <span className="bg-indigo-50 text-indigo-800 text-[11px] font-bold px-2.5 py-0.5 rounded-md">
-                    ⚜️ Official School Crest
+                    ⚜️ {t('product.officialCrest', 'Official School Crest')}
                   </span>
                 )}
               </div>
@@ -166,11 +167,11 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               {/* Pricing */}
               <div className="flex items-baseline gap-3 bg-emerald-50/80 p-3 rounded-xl border border-emerald-100">
                 <div className="text-2xl font-black text-gray-900 font-display">
-                  ${item.price.toFixed(2)}
+                  ¥{item.price.toFixed(2)}
                 </div>
                 <div className="text-xs text-gray-500">
-                  <span className="line-through">${item.originalRetailPrice.toFixed(2)} retail</span>
-                  <span className="text-emerald-700 font-bold ml-2">Save ${(savings).toFixed(2)}</span>
+                  <span className="line-through">¥{item.originalRetailPrice.toFixed(2)} {t('product.retail', 'retail')}</span>
+                  <span className="text-emerald-700 font-bold ml-2">{t('product.save', 'Save')} ¥{(savings).toFixed(2)}</span>
                 </div>
               </div>
 
@@ -184,23 +185,23 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold text-gray-900 flex items-center gap-1.5">
                     <Ruler className="w-4 h-4 text-emerald-600" />
-                    <span>Garment Size: {item.size}</span>
+                    <span>{t('product.size', 'Garment Size:')} {item.size}</span>
                   </span>
                   <button
                     onClick={() => setShowSizeGuide(!showSizeGuide)}
                     className="text-[11px] text-emerald-700 font-bold underline hover:text-emerald-900 cursor-pointer"
                   >
-                    {showSizeGuide ? 'Hide Size Chart' : 'View Size Chart'}
+                    {showSizeGuide ? t('product.hideChart', 'Hide Size Chart') : t('product.viewChart', 'View Size Chart')}
                   </button>
                 </div>
 
                 {item.measurements && (
                   <div className="grid grid-cols-2 gap-2 text-[11px] text-gray-600 pt-1 border-t border-gray-200/60">
                     {item.measurements.chestOrWaist && (
-                      <div>Chest/Waist: <strong className="text-gray-900">{item.measurements.chestOrWaist}</strong></div>
+                      <div>{t('product.chestWaist', 'Chest/Waist:')} <strong className="text-gray-900">{item.measurements.chestOrWaist}</strong></div>
                     )}
                     {item.measurements.length && (
-                      <div>Back Length: <strong className="text-gray-900">{item.measurements.length}</strong></div>
+                      <div>{t('product.backLength', 'Back Length:')} <strong className="text-gray-900">{item.measurements.length}</strong></div>
                     )}
                   </div>
                 )}
@@ -209,14 +210,14 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               {/* Size Guide Table Drawer */}
               {showSizeGuide && (
                 <div className="bg-white p-3 rounded-xl border border-emerald-200 text-[11px] space-y-2 shadow-inner">
-                  <h4 className="font-bold text-gray-900">Standard UK/US School Uniform Size Guide</h4>
+                  <h4 className="font-bold text-gray-900">{t('product.sizeGuideTitle', 'Standard School Uniform Size Guide')}</h4>
                   <table className="w-full text-left border-collapse">
                     <thead>
                       <tr className="border-b border-gray-200 text-gray-500">
-                        <th className="py-1">Age Group</th>
-                        <th className="py-1">Height</th>
-                        <th className="py-1">Chest</th>
-                        <th className="py-1">Waist</th>
+                        <th className="py-1">{t('product.ageGroup', 'Age Group')}</th>
+                        <th className="py-1">{t('product.height', 'Height')}</th>
+                        <th className="py-1">{t('product.chest', 'Chest')}</th>
+                        <th className="py-1">{t('product.waist', 'Waist')}</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100 text-gray-700">
@@ -232,7 +233,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
 
               {/* Key Features Bullet List */}
               <div className="space-y-1.5">
-                <span className="text-xs font-bold text-gray-900">Inspected Garment Features:</span>
+                <span className="text-xs font-bold text-gray-900">{t('product.inspectedFeatures', 'Inspected Garment Features:')}</span>
                 <div className="grid grid-cols-2 gap-1.5 text-xs text-gray-700">
                   {item.features.map((feat, idx) => (
                     <div key={idx} className="flex items-center gap-1.5">
@@ -246,7 +247,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               {/* Pickup / Delivery Notice */}
               <div className="flex items-center gap-3 text-xs text-gray-600 pt-2 border-t border-gray-100">
                 <Building2 className="w-4 h-4 text-emerald-700 shrink-0" />
-                <span>Available for <strong>Free School Front Desk Pickup</strong> or home delivery.</span>
+                <span>{t('product.pickupNotice', 'Available for Free School Front Desk Pickup or home delivery.')}</span>
               </div>
 
             </div>
@@ -271,20 +272,38 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 </div>
 
                 <div className="text-xs text-emerald-700 font-bold">
-                  {item.stockCount > 0 ? `${item.stockCount} Available in Eco Depot` : 'Out of Stock'}
+                  {item.stockCount > 0 
+                    ? t('product.inStock', '{count} Available in Eco Depot').replace('{count}', item.stockCount.toString()) 
+                    : t('product.outOfStock', 'Out of Stock')}
                 </div>
               </div>
 
-              <button
-                onClick={() => {
-                  onAddToCart(item, quantity);
-                  onClose();
-                }}
-                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm py-3.5 rounded-2xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <ShoppingBag className="w-5 h-5" />
-                <span>Add {quantity} to Basket • ${(item.price * quantity).toFixed(2)}</span>
-              </button>
+              <div className="space-y-2">
+                <button
+                  onClick={() => {
+                    onAddToCart(item, quantity);
+                    onClose();
+                  }}
+                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm py-3.5 rounded-2xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <ShoppingBag className="w-5 h-5" />
+                  <span>
+                    {t('product.addQtyToBasket', 'Add {qty} to Basket • ¥{price}')
+                      .replace('{qty}', quantity.toString())
+                      .replace('{price}', (item.price * quantity).toFixed(2))}
+                  </span>
+                </button>
+
+                <a
+                  href={PURCHASE_FORM_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-300 font-bold text-xs py-2.5 rounded-xl transition-colors flex items-center justify-center gap-1.5"
+                >
+                  <ExternalLink className="w-3.5 h-3.5 text-emerald-700" />
+                  <span>{t('cart.goToWjx', 'Click Here to Purchase via Wenjuanxing Form')}</span>
+                </a>
+              </div>
             </div>
 
           </div>

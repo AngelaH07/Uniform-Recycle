@@ -30,6 +30,9 @@ export const Hero: React.FC<HeroProps> = ({ onSearch, openDonationModal, scrollT
           className="relative rounded-3xl overflow-hidden border border-slate-200 shadow-2xl bg-cover bg-center p-6 sm:p-10 lg:p-12 text-white"
           style={{ backgroundImage: `url(${HERO_IMAGE})` }}
         >
+          {/* Subtle dark gradient overlay for optimal legibility */}
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-900/70 to-slate-900/40 pointer-events-none" />
+          
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             {/* Left Column: Clear Introduction & Advert directly over the campus photo */}
@@ -111,18 +114,32 @@ export const Hero: React.FC<HeroProps> = ({ onSearch, openDonationModal, scrollT
             <div className="lg:col-span-4 flex flex-col gap-4 justify-center">
               
               {/* Live Eco Metrics Pill */}
-              <div className="bg-slate-900/85 border border-white/20 backdrop-blur-md text-white p-5 rounded-2xl flex items-center justify-between text-xs shadow-2xl">
-                <div>
-                  <span className="text-[#34D399] font-black text-2xl block font-display leading-tight">
-                    {ECO_STATISTICS.totalUniformsRecycled.toLocaleString()}+
+              <div className="bg-slate-900/90 border border-white/20 backdrop-blur-md text-white p-4 sm:p-5 rounded-2xl grid grid-cols-3 gap-2 sm:gap-3 text-center text-xs shadow-2xl">
+                <div className="space-y-0.5">
+                  <span className="text-[#34D399] font-black text-lg sm:text-xl md:text-2xl block font-display leading-tight">
+                    322+
                   </span>
-                  <span className="text-slate-300 text-[10px] uppercase tracking-widest font-bold">{t('hero.statItems', 'Recycled & Re-loved')}</span>
+                  <span className="text-slate-300 text-[9px] sm:text-[10px] uppercase tracking-wider font-bold block">
+                    {t('hero.statItems', 'Items Saved')}
+                  </span>
                 </div>
-                <div className="text-right">
-                  <span className="text-[#34D399] font-black text-2xl block font-display leading-tight">
-                    ${(ECO_STATISTICS.moneySavedTotalDollars / 1000).toFixed(0)}k+
+
+                <div className="space-y-0.5 border-x border-white/15 px-1 sm:px-2">
+                  <span className="text-[#34D399] font-black text-lg sm:text-xl md:text-2xl block font-display leading-tight">
+                    17,892+
                   </span>
-                  <span className="text-slate-300 text-[10px] uppercase tracking-widest font-bold">{t('hero.statSavings', 'Family Savings')}</span>
+                  <span className="text-slate-300 text-[9px] sm:text-[10px] uppercase tracking-wider font-bold block">
+                    {t('hero.statSavings', 'Family Saved')} (RMB)
+                  </span>
+                </div>
+
+                <div className="space-y-0.5">
+                  <span className="text-[#34D399] font-black text-lg sm:text-xl md:text-2xl block font-display leading-tight">
+                    924 kg+
+                  </span>
+                  <span className="text-slate-300 text-[9px] sm:text-[10px] uppercase tracking-wider font-bold block">
+                    {t('hero.statCo2', 'CO₂ Diverted')}
+                  </span>
                 </div>
               </div>
 
@@ -138,11 +155,11 @@ export const Hero: React.FC<HeroProps> = ({ onSearch, openDonationModal, scrollT
             </div>
             <div className="flex items-center gap-2">
               <HeartHandshake className="w-4 h-4 text-[#34D399]" />
-              <span>Non-Profit Community Drive</span>
+              <span>{t('hero.nonprofit', 'Non-Profit Community Drive')}</span>
             </div>
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-[#34D399]" />
-              <span>Free Reception Drop-Off</span>
+              <span>{t('hero.freeDropoff', 'Free Reception Drop-Off')}</span>
             </div>
           </div>
 

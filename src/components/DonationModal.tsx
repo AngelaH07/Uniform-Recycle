@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { UniformCategory, ConditionGrade, DonationItemInput, DonationSubmission } from '../types';
 import { SAMPLE_SCHOOLS } from '../data/mockData';
+import { useLanguage } from '../context/LanguageContext';
 import { 
   X, 
   Recycle, 
@@ -8,11 +9,8 @@ import {
   Trash2, 
   Upload, 
   MapPin, 
-  Calendar, 
   CheckCircle2, 
-  Sparkles, 
   Coins, 
-  Heart, 
   Printer, 
   QrCode
 } from 'lucide-react';
@@ -30,6 +28,9 @@ export const DonationModal: React.FC<DonationModalProps> = ({
 }) => {
   if (!isOpen) return null;
 
+  const { t, translateCategory, translateCondition, language } = useLanguage();
+  const isZh = language === 'zh';
+
   const [donorName, setDonorName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -46,7 +47,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
       condition: 'Very Good',
       quantity: 1,
       hasSchoolBadge: true,
-      notes: 'Clean, no tear'
+      notes: isZh ? '清洁完好无破损' : 'Clean, no tear'
     }
   ]);
 
@@ -127,25 +128,25 @@ export const DonationModal: React.FC<DonationModalProps> = ({
             <div className="space-y-2">
               <div className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full uppercase">
                 <Recycle className="w-3.5 h-3.5" />
-                <span>Uniform Recycling & Swap Portal</span>
+                <span>{t('donation.portalBadge', 'Uniform Recycling & Swap Portal')}</span>
               </div>
               <h2 className="text-2xl font-extrabold text-gray-900 font-display">
-                Donate or Trade-in Pre-Loved School Uniforms
+                {t('donation.title', 'Donate or Trade-in Pre-Loved School Uniforms')}
               </h2>
               <p className="text-xs text-gray-600">
-                Outgrown blazers, jumpers, or polo shirts? Drop them off to earn recycling credits and help another school family.
+                {t('donation.subtitle', 'Outgrown blazers, jumpers, or polo shirts? Drop them off to earn recycling credits and help another school family.')}
               </p>
             </div>
 
             {/* Step 1: Donor Details */}
             <div className="space-y-3 bg-emerald-50/50 p-4 rounded-2xl border border-emerald-100">
               <h3 className="text-xs font-extrabold text-emerald-900 uppercase tracking-wider">
-                1. Contact & School Details
+                {t('donation.step1', '1. Contact & School Details')}
               </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                 <div>
-                  <label className="block text-gray-700 font-semibold mb-1">Your Full Name *</label>
+                  <label className="block text-gray-700 font-semibold mb-1">{t('donation.fullName', 'Your Full Name')} *</label>
                   <input
                     type="text"
                     required
@@ -157,7 +158,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                 </div>
 
                 <div>
-                  <label className="block text-gray-700 font-semibold mb-1">Email Address *</label>
+                  <label className="block text-gray-700 font-semibold mb-1">{t('donation.email', 'Email Address')} *</label>
                   <input
                     type="email"
                     required
@@ -169,7 +170,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                 </div>
 
                 <div>
-                  <label className="block text-gray-700 font-semibold mb-1">Phone Number *</label>
+                  <label className="block text-gray-700 font-semibold mb-1">{t('donation.phone', 'Phone Number')} *</label>
                   <input
                     type="tel"
                     required
@@ -181,7 +182,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                 </div>
 
                 <div>
-                  <label className="block text-gray-700 font-semibold mb-1">Primary School / Institution</label>
+                  <label className="block text-gray-700 font-semibold mb-1">{t('donation.school', 'Primary School / Institution')}</label>
                   <select
                     value={schoolName}
                     onChange={(e) => setSchoolName(e.target.value)}
@@ -199,7 +200,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <h3 className="text-xs font-extrabold text-gray-900 uppercase tracking-wider">
-                  2. Garments You Want To Donate ({items.length})
+                  {t('donation.step3', '3. Garments You Want To Donate')} ({items.length})
                 </h3>
                 <button
                   type="button"
@@ -207,7 +208,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                   className="text-xs bg-emerald-100 hover:bg-emerald-200 text-emerald-800 font-bold px-3 py-1.5 rounded-xl transition-colors flex items-center gap-1 cursor-pointer"
                 >
                   <Plus className="w-3.5 h-3.5" />
-                  <span>Add Another Item</span>
+                  <span>{t('donation.addItem', '+ Add Another Garment')}</span>
                 </button>
               </div>
 
@@ -218,7 +219,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                       <button
                         type="button"
                         onClick={() => handleRemoveItem(idx)}
-                        className="absolute top-2.5 right-2.5 text-gray-400 hover:text-rose-600 p-1"
+                        className="absolute top-2.5 right-2.5 text-gray-400 hover:text-rose-600 p-1 cursor-pointer"
                         title="Remove item"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -227,24 +228,24 @@ export const DonationModal: React.FC<DonationModalProps> = ({
 
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                       <div>
-                        <label className="block text-gray-600 font-semibold text-[10px]">Type</label>
+                        <label className="block text-gray-600 font-semibold text-[10px]">{t('donation.cat', 'Category')}</label>
                         <select
                           value={item.category}
                           onChange={(e) => handleItemChange(idx, 'category', e.target.value)}
                           className="w-full p-1.5 border border-gray-200 rounded-lg bg-white"
                         >
-                          <option value="blazer">Blazer / Jacket</option>
-                          <option value="jumper">Jumper / Sweatshirt</option>
-                          <option value="polo">Polo / Shirt</option>
-                          <option value="trouser">Trouser</option>
-                          <option value="skirt">Skirt / Pinafore</option>
-                          <option value="pe_kit">PE Sport Kit</option>
-                          <option value="accessory">Tie / Accessory</option>
+                          <option value="blazer">{translateCategory('blazer')}</option>
+                          <option value="jumper">{translateCategory('jumper')}</option>
+                          <option value="polo">{translateCategory('polo')}</option>
+                          <option value="trouser">{translateCategory('trouser')}</option>
+                          <option value="skirt">{translateCategory('skirt')}</option>
+                          <option value="pe_kit">{translateCategory('pe_kit')}</option>
+                          <option value="accessory">{translateCategory('accessory')}</option>
                         </select>
                       </div>
 
                       <div>
-                        <label className="block text-gray-600 font-semibold text-[10px]">Size</label>
+                        <label className="block text-gray-600 font-semibold text-[10px]">{t('donation.size', 'Size')}</label>
                         <select
                           value={item.size}
                           onChange={(e) => handleItemChange(idx, 'size', e.target.value)}
@@ -261,20 +262,20 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                       </div>
 
                       <div>
-                        <label className="block text-gray-600 font-semibold text-[10px]">Condition</label>
+                        <label className="block text-gray-600 font-semibold text-[10px]">{t('donation.cond', 'Condition')}</label>
                         <select
                           value={item.condition}
                           onChange={(e) => handleItemChange(idx, 'condition', e.target.value)}
                           className="w-full p-1.5 border border-gray-200 rounded-lg bg-white"
                         >
-                          <option value="Like New">Like New (Mint)</option>
-                          <option value="Very Good">Very Good</option>
-                          <option value="Good">Good</option>
+                          <option value="Like New">{translateCondition('Like New')}</option>
+                          <option value="Very Good">{translateCondition('Very Good')}</option>
+                          <option value="Good">{translateCondition('Good')}</option>
                         </select>
                       </div>
 
                       <div>
-                        <label className="block text-gray-600 font-semibold text-[10px]">Quantity</label>
+                        <label className="block text-gray-600 font-semibold text-[10px]">{t('donation.qty', 'Quantity')}</label>
                         <input
                           type="number"
                           min="1"
@@ -294,7 +295,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                           onChange={(e) => handleItemChange(idx, 'hasSchoolBadge', e.target.checked)}
                           className="rounded-sm accent-emerald-600"
                         />
-                        <span>Includes official embroidered school crest/logo</span>
+                        <span>{t('donation.badgeCheckbox', 'Includes Official Embroidered School Crest/Badge')}</span>
                       </label>
                     </div>
                   </div>
@@ -305,7 +306,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
             {/* Step 3: Pickup or Drop-off Method */}
             <div className="space-y-3">
               <h3 className="text-xs font-extrabold text-gray-900 uppercase tracking-wider">
-                3. Choose Drop-Off / Collection Method
+                {t('donation.step2', '2. Collection Method')}
               </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
@@ -319,8 +320,8 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                   }`}
                 >
                   <MapPin className="w-4 h-4 text-emerald-600 mb-1" />
-                  <div className="font-bold">School Drop Box</div>
-                  <div className="text-[10px] text-gray-500">Free in reception foyer</div>
+                  <div className="font-bold">{t('donation.schoolDropoff', 'Drop off at School Reception (Free)')}</div>
+                  <div className="text-[10px] text-gray-500">{t('donation.dropoffDesc', 'Drop your bag directly into the marked GreenThread eco box.')}</div>
                 </button>
 
                 <button
@@ -333,8 +334,8 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                   }`}
                 >
                   <Recycle className="w-4 h-4 text-emerald-600 mb-1" />
-                  <div className="font-bold">Home Pickup</div>
-                  <div className="text-[10px] text-gray-500">Free community van</div>
+                  <div className="font-bold">{t('donation.homePickup', 'Home Courier Pickup')}</div>
+                  <div className="text-[10px] text-gray-500">{isZh ? '环保回收专车预约' : 'Free community van'}</div>
                 </button>
 
                 <button
@@ -347,14 +348,14 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                   }`}
                 >
                   <Upload className="w-4 h-4 text-emerald-600 mb-1" />
-                  <div className="font-bold">Prepaid Postal Tag</div>
-                  <div className="text-[10px] text-gray-500">Print shipping label</div>
+                  <div className="font-bold">{isZh ? '邮寄投递' : 'Prepaid Postal Tag'}</div>
+                  <div className="text-[10px] text-gray-500">{isZh ? '打印免邮寄件标签' : 'Print shipping label'}</div>
                 </button>
               </div>
 
               {pickupMethod === 'school_dropoff' && (
                 <div className="bg-gray-50 p-3 rounded-xl border border-gray-200 text-xs">
-                  <label className="block text-gray-700 font-semibold mb-1">Select Reception Drop Location:</label>
+                  <label className="block text-gray-700 font-semibold mb-1">{isZh ? '选择学校前台接待处：' : 'Select Reception Drop Location:'}</label>
                   <select
                     value={dropoffLocation}
                     onChange={(e) => setDropoffLocation(e.target.value)}
@@ -371,13 +372,13 @@ export const DonationModal: React.FC<DonationModalProps> = ({
 
               {pickupMethod === 'home_pickup' && (
                 <div className="bg-gray-50 p-3 rounded-xl border border-gray-200 text-xs">
-                  <label className="block text-gray-700 font-semibold mb-1">Collection Address:</label>
+                  <label className="block text-gray-700 font-semibold mb-1">{t('donation.homeAddress', 'Home Street Address')}:</label>
                   <input
                     type="text"
                     required
                     value={homeAddress}
                     onChange={(e) => setHomeAddress(e.target.value)}
-                    placeholder="Street address, city, zip code"
+                    placeholder={isZh ? '街道地址，门牌号，城市，邮编' : 'Street address, city, zip code'}
                     className="w-full p-2 border border-gray-200 rounded-lg bg-white"
                   />
                 </div>
@@ -389,11 +390,11 @@ export const DonationModal: React.FC<DonationModalProps> = ({
               <div className="flex items-center gap-2">
                 <Coins className="w-5 h-5 text-amber-600 shrink-0" />
                 <div>
-                  <span className="font-bold">Estimated Eco Swap Credits: </span>
-                  <span>{calculateCredits()} Points ($1 credit per 5 points)</span>
+                  <span className="font-bold">{t('donation.estimatedCredits', 'Estimated Eco Recycling Credits:')} </span>
+                  <span>{calculateCredits()} {isZh ? '积分（每5分抵扣$1）' : 'Points ($1 credit per 5 points)'}</span>
                 </div>
               </div>
-              <span className="text-[10px] bg-amber-200 font-extrabold px-2 py-0.5 rounded-full">Automated</span>
+              <span className="text-[10px] bg-amber-200 font-extrabold px-2 py-0.5 rounded-full">{isZh ? '自动计算' : 'Automated'}</span>
             </div>
 
             {/* Submit Button */}
@@ -402,7 +403,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
               className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm py-3.5 rounded-2xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
             >
               <Recycle className="w-5 h-5" />
-              <span>Submit Donation & Get Drop-Off Pass</span>
+              <span>{t('donation.submit', 'Generate Donation & Drop-Off Pass')}</span>
             </button>
 
           </form>
@@ -415,13 +416,17 @@ export const DonationModal: React.FC<DonationModalProps> = ({
 
             <div className="space-y-2">
               <span className="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full uppercase">
-                Donation Pass Generated
+                {t('donation.passTitle', 'Donation Pass Generated!')}
               </span>
               <h2 className="text-2xl font-black text-gray-900 font-display">
-                Thank You, {completedSubmission.donorName}!
+                {isZh ? `感谢您的爱心与支持，${completedSubmission.donorName}！` : `Thank You, ${completedSubmission.donorName}!`}
               </h2>
               <p className="text-xs text-gray-600 max-w-md mx-auto">
-                Your uniform donation request <strong>#{completedSubmission.id}</strong> is registered. You earned <strong>{completedSubmission.estimatedCredits} Eco Credits</strong>!
+                {isZh ? (
+                  <>您的校服捐赠投递请求 <strong>#{completedSubmission.id}</strong> 已成功登记，您已获得 <strong>{completedSubmission.estimatedCredits} 环保调剂积分</strong>！</>
+                ) : (
+                  <>Your uniform donation request <strong>#{completedSubmission.id}</strong> is registered. You earned <strong>{completedSubmission.estimatedCredits} Eco Credits</strong>!</>
+                )}
               </p>
             </div>
 
@@ -429,19 +434,27 @@ export const DonationModal: React.FC<DonationModalProps> = ({
             <div className="bg-emerald-950 text-white p-6 rounded-2xl max-w-md mx-auto text-left space-y-4 shadow-xl border border-emerald-700">
               <div className="flex items-center justify-between border-b border-emerald-800 pb-3">
                 <div>
-                  <div className="text-xs text-emerald-300 font-semibold">DONATION PASS ID</div>
+                  <div className="text-xs text-emerald-300 font-semibold">{t('donation.passId', 'Donation Pass Code')}</div>
                   <div className="font-mono text-lg font-black text-white">{completedSubmission.id}</div>
                 </div>
                 <QrCode className="w-10 h-10 text-emerald-400" />
               </div>
 
               <div className="space-y-1.5 text-xs text-emerald-100">
-                <div><strong>Donor:</strong> {completedSubmission.donorName}</div>
-                <div><strong>School:</strong> {completedSubmission.schoolName}</div>
-                <div><strong>Items:</strong> {completedSubmission.items.length} garment(s)</div>
-                <div><strong>Method:</strong> {completedSubmission.pickupMethod === 'school_dropoff' ? completedSubmission.dropoffLocation : 'Home Collection'}</div>
-                <div><strong>Status:</strong> <span className="text-emerald-300 font-bold">Pass Active (Drop off anytime)</span></div>
+                <div><strong>{t('donation.fullName', 'Donor')}:</strong> {completedSubmission.donorName}</div>
+                <div><strong>{t('donation.school', 'School')}:</strong> {completedSubmission.schoolName}</div>
+                <div><strong>{isZh ? '捐赠件数:' : 'Items:'}</strong> {completedSubmission.items.length} {isZh ? '件校服' : 'garment(s)'}</div>
+                <div><strong>{isZh ? '交付方式:' : 'Method:'}</strong> {completedSubmission.pickupMethod === 'school_dropoff' ? completedSubmission.dropoffLocation : (isZh ? '上门回收' : 'Home Collection')}</div>
+                <div><strong>{isZh ? '状态:' : 'Status:'}</strong> <span className="text-emerald-300 font-bold">{isZh ? '凭证生效中（随时前往投递）' : 'Pass Active (Drop off anytime)'}</span></div>
               </div>
+            </div>
+
+            {/* Instructions list */}
+            <div className="bg-emerald-50 text-emerald-900 p-4 rounded-xl text-left text-xs space-y-1 max-w-md mx-auto border border-emerald-200">
+              <div className="font-bold">{t('donation.dropInstructions', 'Drop-Off Instructions:')}</div>
+              <div>1. {t('donation.instruction1', 'Place clean garments in a reusable bag.')}</div>
+              <div>2. {t('donation.instruction2', 'Write your Donation Pass Code on the bag label.')}</div>
+              <div>3. {t('donation.instruction3', 'Deposit at your school reception desk or green collection box.')}</div>
             </div>
 
             <div className="flex items-center justify-center gap-3 pt-2">
@@ -450,7 +463,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                 className="bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold text-xs px-5 py-2.5 rounded-xl transition-colors flex items-center gap-1.5 cursor-pointer"
               >
                 <Printer className="w-4 h-4" />
-                <span>Print Pass Label</span>
+                <span>{t('donation.printVoucher', 'Print Voucher')}</span>
               </button>
 
               <button
@@ -460,7 +473,7 @@ export const DonationModal: React.FC<DonationModalProps> = ({
                 }}
                 className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition-colors cursor-pointer"
               >
-                Return to Website
+                {t('donation.done', 'Done')}
               </button>
             </div>
 

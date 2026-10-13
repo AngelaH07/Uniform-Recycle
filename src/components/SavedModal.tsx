@@ -1,5 +1,6 @@
 import React from 'react';
 import { UniformItem } from '../types';
+import { useLanguage } from '../context/LanguageContext';
 import { X, Heart, ShoppingBag, Trash2 } from 'lucide-react';
 
 interface SavedModalProps {
@@ -19,6 +20,9 @@ export const SavedModal: React.FC<SavedModalProps> = ({
 }) => {
   if (!isOpen) return null;
 
+  const { t, language } = useLanguage();
+  const isZh = language === 'zh';
+
   return (
     <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
       <div className="bg-white rounded-3xl max-w-lg w-full max-h-[85vh] overflow-y-auto shadow-2xl border border-emerald-100 relative p-6 space-y-5">
@@ -33,14 +37,14 @@ export const SavedModal: React.FC<SavedModalProps> = ({
         <div className="flex items-center gap-2 border-b border-gray-100 pb-3">
           <Heart className="w-5 h-5 text-rose-500 fill-current" />
           <h3 className="font-extrabold text-base text-gray-900 font-display">
-            Saved Wishlist ({savedItems.length})
+            {t('saved.title', 'Saved Wishlist ({count})').replace('{count}', savedItems.length.toString())}
           </h3>
         </div>
 
         {savedItems.length === 0 ? (
           <div className="text-center py-10 text-xs text-gray-500 space-y-2">
-            <p>You haven't saved any uniform items to your wishlist yet.</p>
-            <p>Click the heart icon on any uniform card in the store catalog to save it for later.</p>
+            <p>{t('saved.empty', 'No saved items yet.')}</p>
+            <p>{isZh ? '在校服商店中点击任何校服卡片上的爱心图标即可收藏。' : 'Click the heart icon on any uniform card in the store catalog to save it for later.'}</p>
           </div>
         ) : (
           <div className="space-y-3 max-h-80 overflow-y-auto pr-1">
@@ -57,8 +61,8 @@ export const SavedModal: React.FC<SavedModalProps> = ({
 
                 <div className="flex-1 space-y-0.5">
                   <h4 className="font-bold text-gray-900 line-clamp-1">{item.title}</h4>
-                  <div className="text-[10px] text-gray-500">{item.schoolName} • Size: {item.size}</div>
-                  <div className="font-extrabold text-gray-900 font-display">${item.price.toFixed(2)}</div>
+                  <div className="text-[10px] text-gray-500">{item.schoolName} • {t('product.size', 'Size:')} {item.size}</div>
+                  <div className="font-extrabold text-gray-900 font-display">¥{item.price.toFixed(2)}</div>
                 </div>
 
                 <div className="flex items-center gap-1.5">
@@ -67,13 +71,13 @@ export const SavedModal: React.FC<SavedModalProps> = ({
                     className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] px-3 py-1.5 rounded-lg flex items-center gap-1 cursor-pointer"
                   >
                     <ShoppingBag className="w-3.5 h-3.5" />
-                    <span>Add</span>
+                    <span>{t('product.add', 'Add to Basket')}</span>
                   </button>
 
                   <button
                     onClick={() => onRemoveSave(item.id)}
                     className="p-1.5 text-gray-400 hover:text-rose-600 cursor-pointer"
-                    title="Remove"
+                    title={isZh ? '移除' : 'Remove'}
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>

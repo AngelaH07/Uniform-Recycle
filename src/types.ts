@@ -1,13 +1,6 @@
-export type ConditionGrade = 'Like New' | 'Very Good' | 'Good';
+export type UniformCategory = 'blazer' | 'jumper' | 'polo' | 'trouser' | 'skirt' | 'pe_kit' | 'accessory' | 'all';
 
-export type UniformCategory = 
-  | 'blazer' 
-  | 'jumper' 
-  | 'polo' 
-  | 'trouser' 
-  | 'skirt' 
-  | 'pe_kit' 
-  | 'accessory';
+export type ConditionGrade = 'New with Tags' | 'Like New' | 'Very Good' | 'Good';
 
 export interface School {
   id: string;
@@ -26,17 +19,17 @@ export interface School {
 export interface UniformItem {
   id: string;
   title: string;
+  photoName?: string;
   schoolId: string;
   schoolName: string;
   category: UniformCategory;
   size: string;
-  gender: 'Unisex' | 'Boys' | 'Girls';
+  gender: 'Boys' | 'Girls' | 'Unisex';
   condition: ConditionGrade;
   price: number;
   originalRetailPrice: number;
   description: string;
   imageUrl: string;
-  photoName?: string;
   stockCount: number;
   badgePresent: boolean;
   sanitizedDate: string;
@@ -50,31 +43,6 @@ export interface UniformItem {
 export interface CartItem {
   item: UniformItem;
   quantity: number;
-}
-
-export interface DonationItemInput {
-  category: UniformCategory;
-  size: string;
-  condition: ConditionGrade;
-  quantity: number;
-  notes?: string;
-  hasSchoolBadge: boolean;
-}
-
-export interface DonationSubmission {
-  id: string;
-  donorName: string;
-  email: string;
-  phone: string;
-  schoolName: string;
-  items: DonationItemInput[];
-  pickupMethod: 'school_dropoff' | 'home_pickup' | 'mail_in';
-  dropoffLocation?: string;
-  address?: string;
-  preferredDate: string;
-  status: 'Pending' | 'Approved' | 'Collected' | 'Processed';
-  createdAt: string;
-  estimatedCredits: number;
 }
 
 export interface Order {
@@ -94,28 +62,46 @@ export interface Order {
     city: string;
     postalCode: string;
   };
-  paymentMethod: 'card' | 'credits' | 'pay_on_pickup';
-  status: 'Received' | 'Ready for Pickup' | 'Shipped' | 'Completed';
+  paymentMethod: 'card' | 'pay_on_pickup' | 'wechat' | 'alipay';
+  status: 'Order Placed' | 'Sanitizing' | 'Ready for Pickup' | 'Shipped' | 'Completed';
   createdAt: string;
   estimatedDeliveryOrPickupDate: string;
+}
+
+export interface DonationItemInput {
+  category: UniformCategory;
+  gender: 'Boys' | 'Girls' | 'Unisex';
+  size: string;
+  condition: ConditionGrade;
+  schoolId: string;
+  hasSchoolBadge: boolean;
+  quantity?: number;
+  notes?: string;
+  photoUrl?: string;
+}
+
+export interface DonationSubmission {
+  id: string;
+  donorName: string;
+  email: string;
+  phone: string;
+  schoolName: string;
+  items: DonationItemInput[];
+  estimatedVoucherValue?: number;
+  estimatedCredits?: number;
+  pickupMethod: 'school_dropoff' | 'home_pickup' | 'mail_in';
+  dropoffLocation?: string;
+  homeAddress?: string;
+  address?: string;
+  preferredDate?: string;
+  status?: string;
+  createdAt: string;
 }
 
 export interface ContactInquiry {
   name: string;
   email: string;
-  subject: string;
-  schoolName?: string;
-  message: string;
-}
-
-export interface FilterState {
-  searchQuery: string;
   schoolId: string;
-  category: string;
-  size: string;
-  condition: string;
-  maxPrice: number;
-  gender: string;
-  badgeOnly: boolean;
-  sortBy: 'price-asc' | 'price-desc' | 'condition-best' | 'newest';
+  inquiryType: 'general' | 'donation' | 'partnership' | 'feedback';
+  message: string;
 }

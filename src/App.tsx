@@ -16,12 +16,16 @@ import { OrderTrackerModal } from './components/OrderTrackerModal';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { SavedModal } from './components/SavedModal';
+import { ResearchMissionSection } from './components/ResearchMissionSection';
+import { AboutUsSection } from './components/AboutUsSection';
 
 import { UniformItem, CartItem, Order, DonationSubmission } from './types';
 import { INITIAL_UNIFORM_ITEMS, CAMPUS_SURFACE_IMAGE } from './data/mockData';
 import { CheckCircle2, ShoppingBag, Sparkles } from 'lucide-react';
+import { useLanguage } from './context/LanguageContext';
 
 export default function App() {
+  const { language } = useLanguage();
   const [activeTab, setActiveTab] = useState('about');
   const [itemsCatalog] = useState<UniformItem[]>(INITIAL_UNIFORM_ITEMS);
   const [cart, setCart] = useState<CartItem[]>(() => {
@@ -248,6 +252,27 @@ export default function App() {
             <ProjectInfo
               openDonationModal={() => setIsDonationModalOpen(true)}
               scrollToStore={() => setActiveTab('store')}
+              scrollToSurvey={() => setActiveTab('survey')}
+              scrollToAboutUs={() => setActiveTab('about-us')}
+            />
+          </div>
+        )}
+
+        {activeTab === 'about-us' && (
+          <div className="animate-in fade-in duration-300">
+            <AboutUsSection
+              scrollToStore={() => setActiveTab('store')}
+              openDonationModal={() => setIsDonationModalOpen(true)}
+            />
+          </div>
+        )}
+
+        {activeTab === 'survey' && (
+          <div className="animate-in fade-in duration-300">
+            <ResearchMissionSection
+              scrollToStore={() => scrollToSection('store')}
+              openDonationModal={() => setIsDonationModalOpen(true)}
+              openCalculator={() => scrollToSection('calculator')}
             />
           </div>
         )}
@@ -275,7 +300,13 @@ export default function App() {
 
         {activeTab === 'contact' && (
           <div className="animate-in fade-in duration-300">
-            <ContactSection />
+            <ContactSection
+              openDonationModal={() => setIsDonationModalOpen(true)}
+              onSelectSchool={(schoolId) => {
+                setSearchFilter('');
+                setActiveTab('store');
+              }}
+            />
           </div>
         )}
       </main>
@@ -329,6 +360,24 @@ export default function App() {
       />
 
       </div>
+
+      {/* Universal Page Bottom Developer Credit in Bright Yellow */}
+      <footer 
+        className="w-full bg-[#090D16] py-3.5 px-4 border-t border-slate-800 text-center text-xs font-bold tracking-wide relative z-20" 
+        style={{ color: '#FFE600' }}
+      >
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-2 sm:gap-6">
+          <span>{language === 'zh' ? '网页开发者:骆弈帆' : 'Web Designer: Raven Luo'}</span>
+          <span className="opacity-40">•</span>
+          <a
+            href="mailto:ravenluo0705@gmail.com"
+            className="hover:underline transition-all hover:brightness-125"
+            style={{ color: '#FFE600' }}
+          >
+            Email:ravenluo0705@gmail.com
+          </a>
+        </div>
+      </footer>
     </div>
   );
 }

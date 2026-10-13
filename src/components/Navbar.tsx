@@ -28,6 +28,8 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const navLinks = [
     { id: 'about', label: t('nav.recycling', 'Uniform Recycling') },
+    { id: 'about-us', label: t('nav.aboutUs', 'About Us') },
+    { id: 'survey', label: t('nav.survey', 'Survey & Intention') },
     { id: 'store', label: t('nav.store', 'Uniform Store') },
     { id: 'calculator', label: t('nav.eco', 'Eco Impact') },
     { id: 'contact', label: t('nav.contact', 'Contact & Drop-offs') },
