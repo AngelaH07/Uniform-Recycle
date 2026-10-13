@@ -26,7 +26,7 @@ import { useLanguage } from './context/LanguageContext';
 
 export default function App() {
   const { language } = useLanguage();
-  const [activeTab, setActiveTab] = useState('about');
+  const [activeTab, setActiveTab] = useState('about-us');
   const [itemsCatalog] = useState<UniformItem[]>(INITIAL_UNIFORM_ITEMS);
   const [cart, setCart] = useState<CartItem[]>(() => {
     try {
