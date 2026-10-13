@@ -60,7 +60,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           
           {/* Logo & Brand Name */}
           <div 
-            onClick={() => handleNavClick('about')}
+            onClick={() => handleNavClick('about-us')}
             className="flex items-center gap-3 cursor-pointer group"
           >
             <div className="w-10 h-10 bg-[#059669] rounded-xl flex items-center justify-center text-white shadow-sm group-hover:bg-[#047857] transition-colors">
