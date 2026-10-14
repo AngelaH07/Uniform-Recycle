@@ -150,75 +150,10 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
         </div>
 
         {/* Contact Info & Inquiry Form Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 gap-8 items-start">
           
-          {/* Left: Contact Info Cards */}
-          <div className="lg:col-span-5 space-y-5">
-            <div className="bg-emerald-900 text-white p-6 sm:p-8 rounded-3xl shadow-xl border border-emerald-700 space-y-6">
-              
-              <div className="space-y-2">
-                <span className="bg-emerald-500/20 text-emerald-300 text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                  {t('contact.hubBadge', 'Central Recycling Depot')}
-                </span>
-                <h3 className="text-xl font-bold font-display text-white">
-                  {t('contact.hubTitle', 'GreenThread Community Hub')}
-                </h3>
-                <p className="text-xs text-emerald-100 leading-relaxed">
-                  {t('contact.hubDesc', 'Our main processing center inspects, sanitizes, and catalogs over 1,000 recycled school garments every month.')}
-                </p>
-              </div>
-
-              <div className="space-y-4 text-xs text-emerald-100 border-t border-emerald-800 pt-5">
-                
-                <div className="flex items-start gap-3">
-                  <MapPin className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
-                  <div>
-                    <strong className="block text-white font-bold">{t('contact.mainHub', 'Main Collection Hub:')}</strong>
-                    <span>{t('contact.mainHubAddress', '100 Eco Green Way, Community District Center, Main Hall')}</span>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <Phone className="w-5 h-5 text-emerald-400 shrink-0" />
-                  <div>
-                    <strong className="block text-white font-bold">{t('contact.helpline', 'Helpline & WhatsApp:')}</strong>
-                    <span>(555) 019-RECYCLE / (555) 019-7329</span>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <Mail className="w-5 h-5 text-emerald-400 shrink-0" />
-                  <div>
-                    <strong className="block text-white font-bold">{t('contact.emailSupport', 'Email Support:')}</strong>
-                    <span>support@greenthreaduniforms.org</span>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <Clock className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
-                  <div>
-                    <strong className="block text-white font-bold">{t('contact.depotHours', 'Depot Drop-Off Hours:')}</strong>
-                    <span>{t('contact.depotHoursVal', 'Monday – Friday: 8:00 AM – 5:00 PM')}</span>
-                    <div className="text-[10px] text-emerald-300 mt-0.5">
-                      {t('contact.box247', 'School reception boxes available 24/7 during school terms')}
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-
-              <div className="pt-2 border-t border-emerald-800/80">
-                <div className="flex items-center gap-2 text-[11px] text-emerald-200 bg-emerald-950/60 p-3 rounded-2xl border border-emerald-700/50">
-                  <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span>{isZh ? '所有捐赠衣物均享60°C高温消毒与爱心积分置换保证' : 'All donations receive 60°C sanitization & swap credit guarantee'}</span>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
           {/* Right: Contact Form */}
-          <div className="lg:col-span-7 bg-white p-6 sm:p-8 rounded-3xl border border-gray-200 shadow-md space-y-4">
+          <div className="w-full max-w-3xl mx-auto bg-white p-6 sm:p-8 rounded-3xl border border-gray-200 shadow-md space-y-4">
             
             <div className="space-y-1">
               <h3 className="text-lg font-bold text-gray-900 font-display">
