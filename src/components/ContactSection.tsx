@@ -152,120 +152,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
         {/* Contact Info & Inquiry Form Grid */}
         <div className="grid grid-cols-1 gap-8 items-start">
           
-          {/* Right: Contact Form */}
-          <div className="w-full max-w-3xl mx-auto bg-white p-6 sm:p-8 rounded-3xl border border-gray-200 shadow-md space-y-4">
-            
-            <div className="space-y-1">
-              <h3 className="text-lg font-bold text-gray-900 font-display">
-                {t('contact.formTitle', 'Send Us a Direct Inquiry')}
-              </h3>
-              <p className="text-xs text-gray-500">
-                {t('contact.formSubtitle', 'Fill out the form below and our eco coordinator will respond within 24 hours.')}
-              </p>
-            </div>
-
-            {submitted ? (
-              <div className="bg-emerald-50 border border-emerald-200 p-8 rounded-2xl text-center space-y-3 animate-in fade-in duration-300">
-                <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto" />
-                <h4 className="font-bold text-gray-900 text-base">
-                  {t('contact.successTitle', 'Inquiry Submitted Successfully!')}
-                </h4>
-                <p className="text-xs text-gray-600">
-                  {t('contact.successDesc', 'Thank you, {name}. We have received your message and sent a confirmation to {email}.')
-                    .replace('{name}', formState.name || '')
-                    .replace('{email}', formState.email || '')}
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4 text-xs">
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-gray-700 font-semibold mb-1">
-                      {t('contact.name', 'Your Name *')}
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={formState.name}
-                      onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                      placeholder={t('contact.namePlaceholder', 'e.g. Maria Garcia')}
-                      className="w-full px-3 py-2 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:outline-hidden focus:border-emerald-600 transition-colors"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-gray-700 font-semibold mb-1">
-                      {t('contact.email', 'Email Address *')}
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      value={formState.email}
-                      onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                      placeholder={t('contact.emailPlaceholder', 'maria@example.com')}
-                      className="w-full px-3 py-2 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:outline-hidden focus:border-emerald-600 transition-colors"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-gray-700 font-semibold mb-1">
-                      {t('contact.subject', 'Inquiry Topic')}
-                    </label>
-                    <select
-                      value={formState.subject}
-                      onChange={(e) => setFormState({ ...formState, subject: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:outline-hidden font-medium"
-                    >
-                      <option value="General Inquiry">{t('contact.subjectGeneral', 'General Question')}</option>
-                      <option value="Donation Pickup">{t('contact.subjectDonation', 'Donation / Drop-Off Help')}</option>
-                      <option value="School Partnership">{t('contact.subjectPartnership', 'School Partnership Request')}</option>
-                      <option value="Order Tracking">{t('contact.subjectOrder', 'Order / Size Exchange')}</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-gray-700 font-semibold mb-1">
-                      {t('contact.school', 'School Name (Optional)')}
-                    </label>
-                    <input
-                      type="text"
-                      value={formState.schoolName}
-                      onChange={(e) => setFormState({ ...formState, schoolName: e.target.value })}
-                      placeholder={t('contact.schoolPlaceholder', "e.g. St. Jude's Academy")}
-                      className="w-full px-3 py-2 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:outline-hidden focus:border-emerald-600 transition-colors"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-gray-700 font-semibold mb-1">
-                    {t('contact.message', 'Your Message *')}
-                  </label>
-                  <textarea
-                    required
-                    rows={4}
-                    value={formState.message}
-                    onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                    placeholder={t('contact.messagePlaceholder', 'How can we help you or your school community today?')}
-                    className="w-full px-3 py-2 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:outline-hidden focus:border-emerald-600 transition-colors"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs py-3 rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
-                >
-                  <Send className="w-4 h-4" />
-                  <span>{isSubmitting ? t('contact.sending', 'Submitting...') : t('contact.send', 'Send Inquiry')}</span>
-                </button>
-
-              </form>
-            )}
-
+          {/* Direct email contact — no simulated submission */}
+          <div className="w-full max-w-3xl mx-auto bg-white p-6 sm:p-8 rounded-3xl border border-gray-200 shadow-md text-center space-y-4">
+            <div className="mx-auto w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center"><Mail className="w-6 h-6" /></div>
+            <h3 className="text-xl font-bold text-gray-900">{isZh ? '联系 UR 团队' : 'Contact the UR Team'}</h3>
+            <p className="text-sm text-gray-600">{isZh ? '有校服回收、购买或合作方面的问题？欢迎直接发送邮件给我们。' : 'Questions about uniform recycling, purchases, or partnerships? Send us an email.'}</p>
+            <a href="mailto:angelahh07@163.com?subject=UR%20Uniform%20Recycle%20Inquiry" className="inline-flex items-center justify-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition-colors"><Mail className="w-4 h-4" />{isZh ? '发送邮件给 UR' : 'Email the UR Team'}</a>
+            <p className="text-xs text-gray-500">angelahh07@163.com</p>
           </div>
 
         </div>
