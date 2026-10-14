@@ -142,6 +142,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
           </p>
         </div>
 
+        {/* Official uniform purchase form */}
+        <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-6 sm:p-8 text-center space-y-3">
+          <h3 className="text-xl font-extrabold text-emerald-950">{isZh ? '想购买二手校服？' : 'Looking to Buy Pre-Loved Uniforms?'}</h3>
+          <p className="text-sm text-emerald-900">{isZh ? '请填写 UR 官方问卷星购买表单，我们会根据你的需求跟进。' : 'Fill out the official UR purchase questionnaire and our team will follow up.'}</p>
+          <a href="https://www.wjx.top/vm/mcN5csM.aspx" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition-colors"><ShoppingBag className="w-4 h-4" />{isZh ? '前往问卷星购买校服' : 'Purchase Uniforms — Open Form'}<ExternalLink className="w-4 h-4" /></a>
+        </div>
+
         {/* Contact Info & Inquiry Form Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
