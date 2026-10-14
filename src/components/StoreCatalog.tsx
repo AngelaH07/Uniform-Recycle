@@ -123,6 +123,8 @@ export const StoreCatalog: React.FC<StoreCatalogProps> = ({
               : 'Every piece is sanitized, inspected, and verified with all official school badges intact. Save up to 80% compared to brand new uniform retail.'}
           </p>
 
+          <a href="https://www.wjx.top/vm/mcN5csM.aspx" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-white text-emerald-900 hover:bg-emerald-50 px-5 py-3 rounded-xl font-extrabold text-sm shadow-md transition-colors"> <ShoppingBag className="w-4 h-4" />{isZh ? '填写问卷星购买校服' : 'Purchase Uniforms — Fill Out Form'} ↗</a>
+          <p className="text-emerald-100 text-xs">{isZh ? '请通过问卷星填写购买需求，UR 团队将跟进处理。' : 'Complete the official questionnaire to request uniforms. The UR team will follow up.'}</p>
           <div className="pt-2 flex flex-wrap gap-3">
             <button
               onClick={() => onAddBundleToCart('school-all')}
